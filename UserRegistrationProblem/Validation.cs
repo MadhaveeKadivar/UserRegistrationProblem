@@ -50,5 +50,26 @@ namespace UserRegistrationProblem
                 return false;
             }
         }
+        /// <summary>
+        /// Email Validation
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static bool EmailValidation(string email) 
+        {
+            string pattern = "^[0-9a-zA-Z]+[./+_-]{0,1}[0-9a-zA-Z]+[@][a-zA-Z0-9-]+[.][a-zA-Z]{2,}([.][a-zA-Z]{2,}){0,1}$"; // Regex for Email validation
+            //If email address entered by user is match with regex then it is valid otherwise not
+            if (Regex.IsMatch(email, pattern))
+            {
+                Console.WriteLine($"\nYour Email address \"{email}\" is valid");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine($"\nYour Email address \"{email}\" is not valid");
+                return false;
+            }
+        }
+
     }
 }
