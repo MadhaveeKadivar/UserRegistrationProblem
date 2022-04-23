@@ -132,5 +132,26 @@ namespace UserRegistrationProblem
                 return false;
             }
         }
+        /// <summary>
+        /// Password Rule 3 Validation
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns>bool</returns>
+        public static bool PasswordRule3Validation(string password)
+        {
+            //Rule - 2 Atleast 1 Capital Letter
+            string patternForRule3 = "^(?=.*[A-Z])(?=.*[0-9])[0-9a-zA-Z@#$%^&*!+=]{8,}$"; // Regex for password validation rule 3
+            //If password entered by user is match with regex then it is valid otherwise not
+            if (Regex.IsMatch(password, patternForRule3))
+            {
+                Console.WriteLine($"\nYour password \"{password}\" is valid");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine($"\nYour password \"{password}\" is not follow password rules");
+                return false;
+            }
+        }
     }
 }
