@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UserRegistrationProblem
 {
-    internal class Validation
+    public class Validation
     {
         /// <summary>
         /// First Name Validation
