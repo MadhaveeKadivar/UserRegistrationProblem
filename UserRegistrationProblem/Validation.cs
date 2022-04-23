@@ -90,5 +90,26 @@ namespace UserRegistrationProblem
                 return false;
             }
         }
+        /// <summary>
+        /// Password Rule 1 Validation
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns>bool</returns>
+        public static bool PasswordRule1Validation(string password) 
+        {
+            //Rule -1 Minimum 8 characters
+            string patternForRule1 = "^[0-9a-zA-Z@#$%^&*!+=]{8,}"; // Regex for password validation rule 1
+            //If password entered by user is match with regex then it is valid otherwise not
+            if (Regex.IsMatch(password, patternForRule1))
+            {
+                Console.WriteLine($"\nYour password \"{password}\" is valid");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine($"\nYour password \"{password}\" is not follow password rules");
+                return false;
+            }
+        }
     }
 }
