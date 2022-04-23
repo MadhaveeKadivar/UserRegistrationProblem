@@ -9,106 +9,193 @@ namespace UserRegistrationProblem
 {
     public class Validation
     {
+        public string input;
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public Validation()
+        {
+            Console.WriteLine("Default Constructor");
+        }
+        /// <summary>
+        /// Parameterized Constructor
+        /// </summary>
+        /// <param name="input"></param>
+        public Validation(string input) 
+        {
+            this.input = input; // Assigning value to local variable
+        }
         /// <summary>
         /// First Name Validation
         /// </summary>
-        /// <param name="fName"></param>
-        /// <returns>bool</returns>
-        public static bool FirstNameValidation(string fName) 
+        /// <returns></returns>
+        public string FirstNameValidation() 
         {
-            string pattern = "^[A-Z][a-z]{2,}$"; // Regex for first name validation
-            //If name entered by user is match with regex then it is valid otherwise not
-            if (Regex.IsMatch(fName, pattern))
+            try
             {
-                Console.WriteLine($"\nYour first name \"{fName}\" is valid");
-                return true;
+                string pattern = "^[A-Z][a-z]{2,}$"; // Regex for first name validation
+                if (input == null)
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.NULL_INPUT, "Input should not be null"); //throwing exception when first name is null
+                }
+                if (input.Equals(string.Empty))
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.EMPTY_INPUT, "Input should not be empty"); //throwing exception when first name is empty
+                }
+                if (Regex.IsMatch(input, pattern)) //If name entered by user is match with regex then it is valid otherwise not
+                {
+                    Console.WriteLine($"\nYour first name \"{input}\" is valid");
+                    return "Input is valid";
+                }
+                else
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.INVALID_INPUT, "Input is not valid");//throwing exception when first name is not valid
+                }
             }
-            else
+            catch (InvalidException ex) // If any exception throws then print exception message
             {
-                Console.WriteLine($"\nYour first name \"{fName}\" is not valid");
-                return false;
+                Console.WriteLine("\n"+ex.Message);
+                return ex.Message;
             }
         }
         /// <summary>
         /// Last Name Validation
         /// </summary>
         /// <param name="lName"></param>
-        /// <returns>bool</returns>
-        public static bool LastNameValidation(string lName) // Creating a method for Last name validation
+        /// <returns></returns>
+        public string LastNameValidation(string lName) 
         {
-            string pattern = "^[A-Z][a-z]{2,}$"; // Regex for last name validation
-            //If name entered by user is match with regex then it is valid otherwise not
-            if (Regex.IsMatch(lName, pattern))
+            try
             {
-                Console.WriteLine($"\nYour last name \"{lName}\" is valid");
-                return true;
+                string pattern = "^[A-Z][a-z]{2,}$"; // Regex for last name validation
+                if (lName == null)
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.NULL_INPUT, "Input should not be null"); //throwing exception when last name is null
+                }
+                if (lName.Equals(string.Empty))
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.EMPTY_INPUT, "Input should not be empty"); //throwing exception when last name is empty
+                }
+                if (Regex.IsMatch(lName, pattern)) //If last name entered by user is match with regex then it is valid otherwise not
+                {
+                    Console.WriteLine($"\nYour last name \"{lName}\" is valid");
+                    return "Input is valid";
+                }
+                else
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.INVALID_INPUT, "Input is not valid");//throwing exception when lastt name is not valid
+                }
+
             }
-            else
+            catch (InvalidException ex) // If any exception throws then print exception message
             {
-                Console.WriteLine($"\nYour last name \"{lName}\" is not valid");
-                Console.WriteLine("\nPlease follow naming convention of last name");
-                return false;
+                Console.WriteLine("\n"+ex.Message);
+                return ex.Message;
             }
         }
         /// <summary>
-        /// Email Validation
+        /// Email Name Validation
         /// </summary>
         /// <param name="email"></param>
-        /// <returns>bool</returns>
-        public static bool EmailValidation(string email) 
+        /// <returns></returns>
+        public string EmailValidation(string email) 
         {
-            string pattern = "^[0-9a-zA-Z]+[./+_-]{0,1}[0-9a-zA-Z]+[@][a-zA-Z0-9-]+[.][a-zA-Z]{2,}([.][a-zA-Z]{2,}){0,1}$"; // Regex for Email validation
-            //If email address entered by user is match with regex then it is valid otherwise not
-            if (Regex.IsMatch(email, pattern))
+            try
             {
-                Console.WriteLine($"\nYour Email address \"{email}\" is valid");
-                return true;
+                string pattern = "^[0-9a-zA-Z]+[./+_-]{0,1}[0-9a-zA-Z]+[@][a-zA-Z0-9-]+[.][a-zA-Z]{2,}([.][a-zA-Z]{2,}){0,1}$"; // Regex for email validation
+                if (email == null)
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.NULL_INPUT, "Input should not be null"); //throwing exception when email is null
+                }
+                if (email.Equals(string.Empty))
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.EMPTY_INPUT, "Input should not be empty"); //throwing exception when email is empty
+                }
+                if (Regex.IsMatch(email, pattern)) //If email entered by user is match with regex then it is valid otherwise not
+                {
+                    Console.WriteLine($"\nYour email address \"{email}\" is valid");
+                    return "Input is valid";
+                }
+                else
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.INVALID_INPUT, "Input is not valid");//throwing exception when email is not valid
+                }
+
             }
-            else
+            catch (InvalidException ex) // If any exception throws then print exception message
             {
-                Console.WriteLine($"\nYour Email address \"{email}\" is not valid");
-                return false;
+                Console.WriteLine("\n"+ex.Message);
+                return ex.Message;
             }
         }
         /// <summary>
         /// Mobile Number Validation
         /// </summary>
-        /// <param name="mobileNo"></param>
-        /// <returns>bool</returns>
-        public static bool MobileNumberValidation(string mobileNo) 
+        /// <param name="mobileNumber"></param>
+        /// <returns></returns>
+        public string MobileNumberValidation(string mobileNumber) 
         {
-            string pattern = "^[9][1][ ][6-9][0-9]{9}$"; // Regex for Mobile number validation
-            //If Mobile Number entered by user is match with regex then it is valid otherwise not
-            if (Regex.IsMatch(mobileNo, pattern))
+            try
             {
-                Console.WriteLine($"\nYour Mobile Number \"{mobileNo}\" is valid");
-                return true;
+                string pattern = "^[9][1][ ][6-9][0-9]{9}$"; // Regex for mobile number validation
+                if (mobileNumber == null)
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.NULL_INPUT, "Input should not be null"); //throwing exception when mobile number is null
+                }
+                if (mobileNumber.Equals(string.Empty))
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.EMPTY_INPUT, "Input should not be empty"); //throwing exception when mobile number is empty
+                }
+                if (Regex.IsMatch(mobileNumber, pattern)) //If mobile number entered by user is match with regex then it is valid otherwise not
+                {
+                    Console.WriteLine($"\nYour mobile number \"{mobileNumber}\" is valid");
+                    return "Input is valid";
+                }
+                else
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.INVALID_INPUT, "Input is not valid");//throwing exception when mobile number is not valid
+                }
+
             }
-            else
+            catch (InvalidException ex) // If any exception throws then print exception message
             {
-                Console.WriteLine($"\nYour Mobile Number \"{mobileNo}\" is not valid");
-                return false;
+                Console.WriteLine("\n"+ex.Message);
+                return ex.Message;
             }
         }
         /// <summary>
         /// Password Rule 1 Validation
         /// </summary>
         /// <param name="password"></param>
-        /// <returns>bool</returns>
-        public static bool PasswordRule1Validation(string password) 
+        /// <returns></returns>
+        public string PasswordRule1Validation(string password) 
         {
-            //Rule -1 Minimum 8 characters
-            string patternForRule1 = "^[0-9a-zA-Z@#$%^&*!+=]{8,}"; // Regex for password validation rule 1
-            //If password entered by user is match with regex then it is valid otherwise not
-            if (Regex.IsMatch(password, patternForRule1))
+            try
             {
-                Console.WriteLine($"\nYour password \"{password}\" is valid");
-                return true;
+                string patternForRule1 = "^[0-9a-zA-Z@#$%^&*!+=]{8,}$"; // Regex for password rule 1 validation
+                if (password == null)
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.NULL_INPUT, "Input should not be null"); //throwing exception when password is null
+                }
+                if (password.Equals(string.Empty))
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.EMPTY_INPUT, "Input should not be empty"); //throwing exception when password is empty
+                }
+                if (Regex.IsMatch(password, patternForRule1)) //If paasword entered by user is match with regex then it is valid otherwise not
+                {
+                    Console.WriteLine($"\nYour password \"{password}\" is valid");
+                    return "Input is valid";
+                }
+                else
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.INVALID_INPUT, "Input is not valid");//throwing exception when password is not valid
+                }
+
             }
-            else
+            catch (InvalidException ex) // If any exception throws then print exception message
             {
-                Console.WriteLine($"\nYour password \"{password}\" is not follow password rules");
-                return false;
+                Console.WriteLine("\n"+ex.Message);
+                return ex.Message;
             }
         }
         /// <summary>
@@ -116,62 +203,104 @@ namespace UserRegistrationProblem
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static bool PasswordRule2Validation(string password) 
+        public string PasswordRule2Validation(string password) 
         {
-            //Rule - 2 Atleast 1 Capital Letter
-            string patternForRule2 = "^(?=.*[A-Z])[0-9a-zA-Z@#$%^&*!+=]{8,}$"; // Regex for password validation rule 2
-            //If password entered by user is match with regex then it is valid otherwise not
-            if (Regex.IsMatch(password, patternForRule2))
+            try
             {
-                Console.WriteLine($"\nYour password \"{password}\" is valid");
-                return true;
+                string patternForRule2 = "^(?=.*[A-Z])[0-9a-zA-Z@#$%^&*!+=]{8,}$"; // Regex for password rule 2 validation
+                if (password == null)
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.NULL_INPUT, "Input should not be null"); //throwing exception when password is null
+                }
+                if (password.Equals(string.Empty))
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.EMPTY_INPUT, "Input should not be empty"); //throwing exception when password is empty
+                }
+                if (Regex.IsMatch(password, patternForRule2)) //If paasword entered by user is match with regex then it is valid otherwise not
+                {
+                    Console.WriteLine($"\nYour password \"{password}\" is valid");
+                    return "Input is valid";
+                }
+                else
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.INVALID_INPUT, "Input is not valid");//throwing exception when password is not valid
+                }
+
             }
-            else
+            catch (InvalidException ex) // If any exception throws then print exception message
             {
-                Console.WriteLine($"\nYour password \"{password}\" is not follow password rules");
-                return false;
+                Console.WriteLine("\n"+ex.Message);
+                return ex.Message;
             }
         }
         /// <summary>
         /// Password Rule 3 Validation
         /// </summary>
         /// <param name="password"></param>
-        /// <returns>bool</returns>
-        public static bool PasswordRule3Validation(string password)
+        /// <returns></returns>
+        public string PasswordRule3Validation(string password) 
         {
-            //Rule - 2 Atleast 1 Capital Letter
-            string patternForRule3 = "^(?=.*[A-Z])(?=.*[0-9])[0-9a-zA-Z@#$%^&*!+=]{8,}$"; // Regex for password validation rule 3
-            //If password entered by user is match with regex then it is valid otherwise not
-            if (Regex.IsMatch(password, patternForRule3))
+            try
             {
-                Console.WriteLine($"\nYour password \"{password}\" is valid");
-                return true;
+                string patternForRule3 = "^(?=.*[A-Z])(?=.*[0-9])[0-9a-zA-Z@#$%^&*!+=]{8,}$"; // Regex for password rule 3 validation
+                if (password == null)
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.NULL_INPUT, "Input should not be null"); //throwing exception when password is null
+                }
+                if (password.Equals(string.Empty))
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.EMPTY_INPUT, "Input should not be empty"); //throwing exception when password is empty
+                }
+                if (Regex.IsMatch(password, patternForRule3)) //If paasword entered by user is match with regex then it is valid otherwise not
+                {
+                    Console.WriteLine($"\nYour password \"{password}\" is valid");
+                    return "Input is valid";
+                }
+                else
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.INVALID_INPUT, "Input is not valid");//throwing exception when password is not valid
+                }
+
             }
-            else
+            catch (InvalidException ex) // If any exception throws then print exception message
             {
-                Console.WriteLine($"\nYour password \"{password}\" is not follow password rules");
-                return false;
+                Console.WriteLine("\n"+ex.Message);
+                return ex.Message;
             }
         }
         /// <summary>
         /// Password Rule 4 Validation
         /// </summary>
         /// <param name="password"></param>
-        /// <returns>bool</returns>
-        public static bool PasswordRule4Validation(string password) // Creating a method for password validation
+        /// <returns></returns>
+        public string PasswordRule4Validation(string password)
         {
-            //Rule - 4  Has Exactly one special character
-            string finalPatternPassword = @"^(?=.{8,}$)(?=.*[0-9])(?=.*[A-Z])[A-Za-z0-9]{0,}?[@~!#$%^&*+=\/-]{1}[a-zA-Z0-9]{0,}$"; // Regex for password validation rule 4
-            //If password entered by user is match with regex then it is valid otherwise not
-            if (Regex.IsMatch(password, finalPatternPassword))
+            try
             {
-                Console.WriteLine($"\nYour password \"{password}\" is valid");
-                return true;
+                string patternForRule4 = @"^(?=.{8,}$)(?=.*[0-9])(?=.*[A-Z])[A-Za-z0-9]{0,}?[@~!#$%^&*+=\/-]{1}[a-zA-Z0-9]{0,}$"; // Regex for password rule 4 validation
+                if (password == null)
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.NULL_INPUT, "Input should not be null"); //throwing exception when password is null
+                }
+                if (password.Equals(string.Empty))
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.EMPTY_INPUT, "Input should not be empty"); //throwing exception when password is empty
+                }
+                if (Regex.IsMatch(password, patternForRule4)) //If paasword entered by user is match with regex then it is valid otherwise not
+                {
+                    Console.WriteLine($"\nYour password \"{password}\" is valid");
+                    return "Input is valid";
+                }
+                else
+                {
+                    throw new InvalidException(InvalidException.ExceptionType.INVALID_INPUT, "Input is not valid");//throwing exception when password is not valid
+                }
+
             }
-            else
+            catch (InvalidException ex) // If any exception throws then print exception message
             {
-                Console.WriteLine($"\nYour password \"{password}\" is not follow password rules");
-                return false;
+                Console.WriteLine("\n"+ex.Message);
+                return ex.Message;
             }
         }
 

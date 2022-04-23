@@ -7,178 +7,338 @@ namespace UserRegistrationTesting
     [TestClass]
     public class UserValidation
     {
-        /// <summary>
-        /// Testing for Firstname Validation
-        /// </summary>
-        /// <param name="firstName"></param>
-        /// <param name="expected"></param>        
-        [TestMethod]
-        [DataRow("Madhavee", true)]
-        [DataRow("Ab", false)]
-        [DataRow("madhavee", false)]
-        public void GivenFirstNameValidation(string firstName, bool expected) 
+        Validation validation;
+        UserRegistrationReflector userRegistrationReflector;
+        [TestInitialize]
+        public void SetUp()
         {
-            //Act
-            bool actual = Validation.FirstNameValidation(firstName);
-            //Assert
-            Assert.AreEqual(expected, actual);
+            // common Arrange
+            validation = new Validation();
+            userRegistrationReflector = new UserRegistrationReflector();
         }
-        /// <summary>
-        /// Testing for Lastname Validation
-        /// </summary>
-        /// <param name="lastName"></param>
-        /// <param name="expected"></param>
+        [TestCategory("Exception")]
         [TestMethod]
-        [DataRow("Kadivar", true)]
-        [DataRow("Ab", false)]
-        [DataRow("kadivar", false)]
-        public void GivenLastNameValidation(string lastName, bool expected) 
+        //Checking for multiple first names
+        [DataRow("Madhavee", "Input is valid")]
+        [DataRow("Ab", "Input is not valid")]
+        [DataRow("madhavee", "Input is not valid")]
+        [DataRow("", "Input should not be empty")]
+        [DataRow(null, "Input should not be null")]
+        public void GivenFirstNameValidation(string firstName, string expected) // Testing for Firstname Validation
         {
-            //Act
-            bool actual = Validation.FirstNameValidation(lastName);
-            //Assert
-            Assert.AreEqual(expected, actual);
+            try
+            {
+                //Act
+                validation = new Validation(firstName);
+                string actual = validation.FirstNameValidation();
+                //Assert
+                Assert.AreEqual(expected, actual);
+            }
+            catch (InvalidException ex) // catch exception if input is not valid or null or empty
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
         }
-        /// <summary>
-        /// Testing for Email Validation
-        /// </summary>
-        /// <param name="email"></param>
-        /// <param name="expected"></param>
+        [TestCategory("Exception")]
         [TestMethod]
-        [DataRow("abc123@.com", false)]
-        [DataRow("abc@abc@gmail.com", false)]
-        [DataRow("abc+100@gmail.com", true)]
-        [DataRow("abc@1.com", true)]
-        public void GivenEmailValidation(string email, bool expected) 
+        //Checking for multiple last names
+        [DataRow("Kadivar", "Input is valid")]
+        [DataRow("Ab", "Input is not valid")]
+        [DataRow("kadivar", "Input is not valid")]
+        [DataRow("", "Input should not be empty")]
+        [DataRow(null, "Input should not be null")]
+        public void GivenLastNameValidation(string lastName, string expected) // Testing for Lastname Validation
         {
-            //Act
-            bool actual = Validation.EmailValidation(email);
-            //Assert
-            Assert.AreEqual(expected, actual);
+            try
+            {
+                //Act
+                string actual = validation.LastNameValidation(lastName);
+                //Assert
+                Assert.AreEqual(expected, actual);
+            }
+            catch (InvalidException ex) // catch exception if input is not valid or null or empty
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
         }
-        /// <summary>
-        /// Testing for Mobile Number Validation
-        /// </summary>
-        /// <param name="mobileNumber"></param>
-        /// <param name="expected"></param>
+        [TestCategory("Exception")]
         [TestMethod]
-        [DataRow("91 9652545874", true)]
-        [DataRow("919652545874", false)]
-        [DataRow("9144 9652545874", false)]
-        [DataRow("91 1652545874", false)]
-        public void GivenMobileNumberValidation(string mobileNumber, bool expected) 
+        //Checking for multiple email samples
+        [DataRow("abc123@.com", "Input is not valid")]
+        [DataRow("abc@abc@gmail.com", "Input is not valid")]
+        [DataRow("abc+100@gmail.com", "Input is valid")]
+        [DataRow("abc@1.com", "Input is valid")]
+        [DataRow("", "Input should not be empty")]
+        [DataRow(null, "Input should not be null")]
+        public void GivenEmailValidation(string email, string expected) // Testing for Lastname Validation
         {
-            //Act
-            bool actual = Validation.MobileNumberValidation(mobileNumber);
-            //Assert
-            Assert.AreEqual(expected, actual);
+            try
+            {
+                //Act
+                string actual = validation.EmailValidation(email);
+                //Assert
+                Assert.AreEqual(expected, actual);
+            }
+            catch (InvalidException ex) // catch exception if input is not valid or null or empty
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
         }
-        /// <summary>
-        /// Testing for Password Rule - 1  Validation
-        /// </summary>
-        /// <param name="password"></param>
-        /// <param name="expected"></param>
+        [TestCategory("Exception")]
         [TestMethod]
-        [DataRow("dfghnjvbn", true)]
-        [DataRow("ADF@#$%JVGB", true)]
-        [DataRow("FVGdf", false)]
-        [DataRow("8745fgvhA", true)]
-        public void GivenPasswordRule1Validation(string password, bool expected) 
+        //Checking for multiple mobile numbers
+        [DataRow("91 9652545874", "Input is valid")]
+        [DataRow("919652545874", "Input is not valid")]
+        [DataRow("9144 9652545874", "Input is not valid")]
+        [DataRow("91 1652545874", "Input is not valid")]
+        [DataRow("", "Input should not be empty")]
+        [DataRow(null, "Input should not be null")]
+        public void GivenMobileNumberValidation(string mobileNumber, string expected) // Testing for mobile number Validation
         {
-            //Act
-            bool actual = Validation.PasswordRule1Validation(password);
-            //Assert
-            Assert.AreEqual(expected, actual);
+            try
+            {
+                //Act
+                string actual = validation.MobileNumberValidation(mobileNumber);
+                //Assert
+                Assert.AreEqual(expected, actual);
+            }
+            catch (InvalidException ex) // catch exception if input is not valid or null or empty
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
         }
-        /// <summary>
-        /// Testing for Password Rule - 2  Validation
-        /// </summary>
-        /// <param name="password"></param>
-        /// <param name="expected"></param>
+        [TestCategory("Exception")]
         [TestMethod]
-        [DataRow("dfghnjvbn", false)]
-        [DataRow("A5sdf@#34", true)]
-        [DataRow("FVGdf", false)]
-        [DataRow("wsdfgADFG65@3", true)]
-        public void GivenPasswordRule2Validation(string password, bool expected) 
+        //Checking for multiple password samples
+        [DataRow("dfghnjvbn", "Input is valid")]
+        [DataRow("ADF@#$%JVGB", "Input is valid")]
+        [DataRow("FVGdf", "Input is not valid")]
+        [DataRow("8745fgvhA", "Input is valid")]
+        [DataRow("", "Input should not be empty")]
+        [DataRow(null, "Input should not be null")]
+        public void GivenPasswordRule1Validation(string password, string expected) // Testing for password rule 1 Validation
         {
-            //Act
-            bool actual = Validation.PasswordRule2Validation(password);
-            //Assert
-            Assert.AreEqual(expected, actual);
+            try
+            {
+                //Act
+                string actual = validation.PasswordRule1Validation(password);
+                //Assert
+                Assert.AreEqual(expected, actual);
+            }
+            catch (InvalidException ex) // catch exception if input is not valid or null or empty
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
         }
-        /// <summary>
-        /// Testing for Password Rule - 3  Validation
-        /// </summary>
-        /// <param name="password"></param>
-        /// <param name="expected"></param>
+        [TestCategory("Exception")]
         [TestMethod]
-        [DataRow("dfgDnjvbn", false)]
-        [DataRow("A5sdf@#df", true)]
-        [DataRow("F5G@f", false)]
-        [DataRow("8465ADFG", true)]
-        public void GivenPasswordRule3Validation(string password, bool expected) 
+        //Checking for multiple password samples
+        [DataRow("dfghnjvbn", "Input is not valid")]
+        [DataRow("A5sdf@#34", "Input is valid")]
+        [DataRow("FVGdf", "Input is not valid")]
+        [DataRow("wsdfgADFG65@3", "Input is valid")]
+        [DataRow("", "Input should not be empty")]
+        [DataRow(null, "Input should not be null")]
+        public void GivenPasswordRule2Validation(string password, string expected) // Testing for password rule 2 Validation
         {
-            //Act
-            bool actual = Validation.PasswordRule3Validation(password);
-            //Assert
-            Assert.AreEqual(expected, actual);
+            try
+            {
+                //Act
+                string actual = validation.PasswordRule2Validation(password);
+                //Assert
+                Assert.AreEqual(expected, actual);
+            }
+            catch (InvalidException ex) // catch exception if input is not valid or null or empty
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
         }
-        /// <summary>
-        /// Testing for Password Rule - 4 along with all rules Validation
-        /// </summary>
-        /// <param name="password"></param>
-        /// <param name="expected"></param>
+        [TestCategory("Exception")]
         [TestMethod]
-        [DataRow("dfgDnjvbn", false)]
-        [DataRow("A5sdf@df", true)]
-        [DataRow("F5G@f", false)]
-        [DataRow("85ADcv*gj5", true)]
-        [DataRow("*&&dfgADDd845", false)]
-        [DataRow("885@dfvvvb", false)]
-        [DataRow("AAaa#8ghbb", true)]
-        public void GivenPasswordRule4Validation(string password, bool expected) 
+        //Checking for multiple password samples
+        [DataRow("dfgDnjvbn", "Input is not valid")]
+        [DataRow("A5sdf@#df", "Input is valid")]
+        [DataRow("F5G@f", "Input is not valid")]
+        [DataRow("8465ADFG", "Input is valid")]
+        [DataRow("", "Input should not be empty")]
+        [DataRow(null, "Input should not be null")]
+        public void GivenPasswordRule3Validation(string password, string expected) // Testing for password rule 3 Validation
         {
-            //Act
-            bool actual = Validation.PasswordRule4Validation(password);
-            //Assert
-            Assert.AreEqual(expected, actual);
+            try
+            {
+                //Act
+                string actual = validation.PasswordRule3Validation(password);
+                //Assert
+                Assert.AreEqual(expected, actual);
+            }
+            catch (InvalidException ex) // catch exception if input is not valid or null or empty
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
         }
-        /// <summary>
-        /// Testing for Some Email Samples
-        /// </summary>
-        /// <param name="password"></param>
-        /// <param name="expected"></param>
+        [TestCategory("Exception")]
+        [TestMethod]
+        //Checking for multiple password samples
+        [DataRow("dfgDnjvbn", "Input is not valid")]
+        [DataRow("A5sdf@df", "Input is valid")]
+        [DataRow("F5G@f", "Input is not valid")]
+        [DataRow("85ADcv*gj5", "Input is valid")]
+        [DataRow("*&&dfgADDd845", "Input is not valid")]
+        [DataRow("885@dfvvvb", "Input is not valid")]
+        [DataRow("AAaa#8ghbb", "Input is valid")]
+        [DataRow("", "Input should not be empty")]
+        [DataRow(null, "Input should not be null")]
+        public void GivenPasswordRule4Validation(string password, string expected) // Testing for password rule 4 along with all Validation
+        {
+            try
+            {
+                //Act
+                string actual = validation.PasswordRule4Validation(password);
+                //Assert
+                Assert.AreEqual(expected, actual);
+            }
+            catch (InvalidException ex) // catch exception if input is not valid or null or empty
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
+        [TestCategory("Exception")]
         [TestMethod]
         //Checking for multiple email samples that are valid
-        [DataRow("abc@gmail.com", true)]
-        [DataRow("abc-100@yahoo.com", true)]
-        [DataRow("abc.100@yahoo.com", true)]
-        [DataRow("abc@1.com", true)]
-        [DataRow("abc111@yahoo.com.au", true)]
-        [DataRow("abc-100@yahoo.com.au", true)]
-        [DataRow("abc@gmail.com.com", true)]
-        [DataRow("abc+100@yahoo.com", true)]
+        [DataRow("abc@gmail.com", "Input is valid")]
+        [DataRow("abc-100@yahoo.com", "Input is valid")]
+        [DataRow("abc.100@yahoo.com", "Input is valid")]
+        [DataRow("abc@1.com", "Input is valid")]
+        [DataRow("abc111@yahoo.com.au", "Input is valid")]
+        [DataRow("abc-100@yahoo.com.au", "Input is valid")]
+        [DataRow("abc@gmail.com.com", "Input is valid")]
+        [DataRow("abc+100@yahoo.com", "Input is valid")]
         //Checking for multiple email samples that are Invalid
-        [DataRow("abc", false)]
-        [DataRow("abc@.com.my", false)]
-        [DataRow("abc123@gmail.a", false)]
-        [DataRow("abc123@.com", false)]
-        [DataRow("abc@.com.com", false)]
-        [DataRow(".abc@abc.com", false)]
-        [DataRow("abc()*@gmail.com", false)]
-        [DataRow("abc@%*.com", false)]
-        [DataRow("abc..2002@gmail.com", false)]
-        [DataRow("abc.@gmail.com", false)]
-        [DataRow("abc@abc@gmail.com", false)]
-        [DataRow("abc@gmail.com.1a", false)]
-        [DataRow("abc@gmail.com.aa.au", false)]
-        public void GivenSampleEmailsValidation(string password, bool expected) 
+        [DataRow("abc", "Input is not valid")]
+        [DataRow("abc@.com.my", "Input is not valid")]
+        [DataRow("abc123@gmail.a", "Input is not valid")]
+        [DataRow("abc123@.com", "Input is not valid")]
+        [DataRow("abc@.com.com", "Input is not valid")]
+        [DataRow(".abc@abc.com", "Input is not valid")]
+        [DataRow("abc()*@gmail.com", "Input is not valid")]
+        [DataRow("abc@%*.com", "Input is not valid")]
+        [DataRow("abc..2002@gmail.com", "Input is not valid")]
+        [DataRow("abc.@gmail.com", "Input is not valid")]
+        [DataRow("abc@abc@gmail.com", "Input is not valid")]
+        [DataRow("abc@gmail.com.1a", "Input is not valid")]
+        [DataRow("abc@gmail.com.aa.au", "Input is not valid")]
+        public void GivenEmailSamplesValidation(string email, string expected) // Testing for email samples Validation
         {
-            //Act
-            bool actual = Validation.EmailValidation(password);
-            //Assert
+            try
+            {
+                //Act
+                string actual = validation.EmailValidation(email);
+                //Assert
+                Assert.AreEqual(expected, actual);
+            }
+            catch (InvalidException ex) // catch exception if input is not valid or null or empty
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
+        /// <summary>
+        /// Create a object of Validation class using reflection
+        /// </summary>
+        [TestCategory("Reflection")]
+        [TestMethod]
+        public void GivenClassNameShoulReturnObject()
+        {
+            object expected = new Validation();
+            object actual = userRegistrationReflector.CreateValidationObject("UserRegistrationProblem.Validation", "Validation");
+            expected.Equals(actual);
+        }
+        /// <summary>
+        /// Given Class Name When Improper Should Throw InvalidException
+        /// </summary>
+        [TestCategory("Reflection")]
+        [TestMethod]
+        public void GivenInvalidClassThrowException()
+        {
+            try
+            {
+                object expected = new Validation();
+                object actual = userRegistrationReflector.CreateValidationObject("UserRegistrationProblem.valid", "valid");
+            }
+            catch (InvalidException ex)
+            {
+                Assert.AreEqual("Class not found", ex.Message);
+            }
+        }
+        /// <summary>
+        /// Given Validation Class Name Should Return Validation object with parameter
+        /// </summary>
+        [TestCategory("Reflection")]
+        [TestMethod]
+        public void GivenClassNameShoulReturnParameterizedObject()
+        {
+            string input = "Madhavee";
+            object expected = new Validation(input);
+            object actual = userRegistrationReflector.CreateValidationParameterizedObject("UserRegistrationProblem.Validation", "Validation", input);
+            expected.Equals(actual);
+        }
+
+        /// <summary>
+        /// Given Class Name When Improper Should Throw InvalidException
+        /// </summary>
+        [TestCategory("Reflection")]
+        [TestMethod]
+        public void GivenInvalidClassNameWithMessageThrowException()
+        {
+            try
+            {
+                string input = "Madhavee";
+                object expected = new Validation(input);
+                object actual = userRegistrationReflector.CreateValidationParameterizedObject("UserRegistrationProblem.valid", "valid", input);
+            }
+            catch (InvalidException ex)
+            {
+                Assert.AreEqual("Class not found", ex.Message);
+            }
+        }
+        /// <summary>
+        /// Given FirstName validation Using Reflection When Proper Should Return Input is valid invoking a method
+        /// </summary>
+        [TestCategory("Reflection")]
+        [TestMethod]
+        public void GivenMethodNameWithInputReturnsValidity()
+        {
+            string input = "Madhavee";
+            string expected = "Input is valid";
+            string actual = "";
+            try
+            {
+                actual = userRegistrationReflector.InvokeMethod(input, "FirstNameValidation");
+            }
+            catch (InvalidException ex)
+            {
+                Assert.AreEqual("Method not found", ex.Message);
+            }
             Assert.AreEqual(expected, actual);
+        }
+        /// <summary>
+        /// Given Invalid method name should throw the exception
+        /// </summary>
+        [TestCategory("Reflection")]
+        [TestMethod]
+        public void GivenInvalidMethodNameWithInputThrowException()
+        {
+            string input = "Madhavee";
+            string expected = "Input is valid";
+            string actual = "";
+            try
+            {
+                actual = userRegistrationReflector.InvokeMethod(input, "FirstName");
+                Assert.AreEqual(expected, actual);
+            }
+            catch (InvalidException ex)
+            {
+                Assert.AreEqual("Method not found", ex.Message);
+            }
         }
     }
 }
