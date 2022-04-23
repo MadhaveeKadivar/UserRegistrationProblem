@@ -143,6 +143,42 @@ namespace UserRegistrationTesting
             bool actual = Validation.PasswordRule4Validation(password);
             //Assert
             Assert.AreEqual(expected, actual);
-        }        
+        }
+        /// <summary>
+        /// Testing for Some Email Samples
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="expected"></param>
+        [TestMethod]
+        //Checking for multiple email samples that are valid
+        [DataRow("abc@gmail.com", true)]
+        [DataRow("abc-100@yahoo.com", true)]
+        [DataRow("abc.100@yahoo.com", true)]
+        [DataRow("abc@1.com", true)]
+        [DataRow("abc111@yahoo.com.au", true)]
+        [DataRow("abc-100@yahoo.com.au", true)]
+        [DataRow("abc@gmail.com.com", true)]
+        [DataRow("abc+100@yahoo.com", true)]
+        //Checking for multiple email samples that are Invalid
+        [DataRow("abc", false)]
+        [DataRow("abc@.com.my", false)]
+        [DataRow("abc123@gmail.a", false)]
+        [DataRow("abc123@.com", false)]
+        [DataRow("abc@.com.com", false)]
+        [DataRow(".abc@abc.com", false)]
+        [DataRow("abc()*@gmail.com", false)]
+        [DataRow("abc@%*.com", false)]
+        [DataRow("abc..2002@gmail.com", false)]
+        [DataRow("abc.@gmail.com", false)]
+        [DataRow("abc@abc@gmail.com", false)]
+        [DataRow("abc@gmail.com.1a", false)]
+        [DataRow("abc@gmail.com.aa.au", false)]
+        public void GivenSampleEmailsValidation(string password, bool expected) 
+        {
+            //Act
+            bool actual = Validation.EmailValidation(password);
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
